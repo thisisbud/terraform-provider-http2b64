@@ -5,14 +5,12 @@ linters:
   # Additional linters enabled
   enable:
     - durationcheck
-    - exportloopref
     - godot
     - gofmt
     - makezero
     - misspell
     - nilerr
     - predeclared
-    - tenv
     - unconvert
     - unparam
 

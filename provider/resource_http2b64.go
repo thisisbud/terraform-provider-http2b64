@@ -16,7 +16,7 @@ import (
 var _ resource.Resource = (*http2b64Resource)(nil)
 
 type http2b64Resource struct {
-	provider http2b64Provider
+	provider http2b64Provider //nolint:unused
 }
 
 func NewResource() resource.Resource {
