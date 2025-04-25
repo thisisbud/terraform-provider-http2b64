@@ -183,7 +183,7 @@ func (e *http2b64Resource) Create(ctx context.Context, req resource.CreateReques
 		//return fmt.Errorf("error Getting resource '%v'", err)
 		resp.Diagnostics.AddError(
 			"API Error Creating Resource",
-			fmt.Sprintf("... details ... %s", err),
+			fmt.Sprintf("... details ... %v", err),
 		)
 		return
 	}
