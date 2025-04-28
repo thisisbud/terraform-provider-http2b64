@@ -3,11 +3,9 @@ package main
 import (
 	"context"
 	"flag"
-	"log"
-
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
-
 	"github.com/thisisbud/terraform-provider-http2b64/provider"
+	"log"
 )
 
 func main() {
