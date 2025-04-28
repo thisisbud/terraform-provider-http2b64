@@ -19,10 +19,12 @@ description: |-
 
 - `url` (String)
 
+### Optional
+
+- `configurable_attribute` (String)
+
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `response_body_base64` (String) The Returned body base64 encoded
-- `status_code` (Number) the returned http status code
-
-
+- `response_body_base64` (String)
+- `status_code` (String)
