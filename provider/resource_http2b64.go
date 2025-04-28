@@ -24,7 +24,7 @@ func NewResource() resource.Resource {
 }
 
 func (e *http2b64Resource) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_resource"
+	resp.TypeName = "http2b64"
 }
 
 func (e *http2b64Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
