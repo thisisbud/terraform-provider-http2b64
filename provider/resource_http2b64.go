@@ -39,9 +39,15 @@ func (e *http2b64Resource) Schema(ctx context.Context, req resource.SchemaReques
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
-			"url":                  schema.StringAttribute{},
-			"status_code":          schema.StringAttribute{},
-			"response_body_base64": schema.StringAttribute{},
+			"url": schema.StringAttribute{
+				Required: true,
+			},
+			"status_code": schema.StringAttribute{
+				Computed: true,
+			},
+			"response_body_base64": schema.StringAttribute{
+				Computed: true,
+			},
 		},
 	}
 }
