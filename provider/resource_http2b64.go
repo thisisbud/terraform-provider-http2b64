@@ -72,7 +72,7 @@ func (e *http2b64Resource) Create(ctx context.Context, req resource.CreateReques
 	}
 
 	// Create resource using 3rd party API.
-	url := data.Url.String()
+	url := data.Url.ValueString()
 
 	responseBody, statusCode, err := client.GetFile(url)
 	if err != nil {
@@ -106,7 +106,7 @@ func (e *http2b64Resource) Read(ctx context.Context, req resource.ReadRequest, r
 	}
 
 	// Create resource using 3rd party API.
-	url := data.Url.String()
+	url := data.Url.ValueString()
 
 	responseBody, statusCode, err := client.GetFile(url)
 	if err != nil {
@@ -138,7 +138,7 @@ func (e *http2b64Resource) Update(ctx context.Context, req resource.UpdateReques
 	}
 
 	// Create resource using 3rd party API.
-	url := data.Url.String()
+	url := data.Url.ValueString()
 
 	responseBody, statusCode, err := client.GetFile(url)
 	if err != nil {
