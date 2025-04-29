@@ -6,6 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/thisisbud/terraform-provider-http2b64/client"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -56,7 +57,7 @@ type http2b64ResourceData struct {
 	ConfigurableAttribute types.String `tfsdk:"configurable_attribute"`
 	Id                    types.String `tfsdk:"id"`
 	Url                   types.String `tfsdk:"url"`
-	StatusCode            types.Int32  `tfsdk:"status_code"`
+	StatusCode            types.String `tfsdk:"status_code"`
 	ResponseBodyBas64     types.String `tfsdk:"response_body_base64"`
 }
 
@@ -85,7 +86,7 @@ func (e *http2b64Resource) Create(ctx context.Context, req resource.CreateReques
 
 	data.Id = types.StringValue(url)
 	data.Url = types.StringValue(url)
-	data.StatusCode = types.Int32Value(int32(statusCode))
+	data.StatusCode = types.StringValue(strconv.Itoa(statusCode))
 	data.ResponseBodyBas64 = types.StringValue(responseBody)
 
 	tflog.Trace(ctx, "created a resource")
@@ -119,7 +120,7 @@ func (e *http2b64Resource) Read(ctx context.Context, req resource.ReadRequest, r
 
 	data.Id = types.StringValue(url)
 	data.Url = types.StringValue(url)
-	data.StatusCode = types.Int32Value(int32(statusCode))
+	data.StatusCode = types.StringValue(strconv.Itoa(statusCode))
 	data.ResponseBodyBas64 = types.StringValue(responseBody)
 
 	diags = resp.State.Set(ctx, &data)
@@ -151,7 +152,7 @@ func (e *http2b64Resource) Update(ctx context.Context, req resource.UpdateReques
 
 	data.Id = types.StringValue(url)
 	data.Url = types.StringValue(url)
-	data.StatusCode = types.Int32Value(int32(statusCode))
+	data.StatusCode = types.StringValue(strconv.Itoa(statusCode))
 	data.ResponseBodyBas64 = types.StringValue(responseBody)
 
 	diags = resp.State.Set(ctx, &data)
