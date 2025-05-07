@@ -6,6 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/thisisbud/terraform-provider-http2b64/client"
+	"net/url"
 	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -38,6 +39,7 @@ func (e *http2b64Resource) Schema(ctx context.Context, req resource.SchemaReques
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
+					stringplanmodifier.RequiresReplace(),
 				},
 			},
 			"url": schema.StringAttribute{
@@ -48,6 +50,9 @@ func (e *http2b64Resource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"response_body_base64": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
 			},
 		},
 	}
@@ -72,9 +77,9 @@ func (e *http2b64Resource) Create(ctx context.Context, req resource.CreateReques
 	}
 
 	// Create resource using 3rd party API.
-	url := data.Url.ValueString()
+	input_url := data.Url.ValueString()
 
-	responseBody, statusCode, err := client.GetFile(url)
+	responseBody, statusCode, err := client.GetFile(input_url)
 	if err != nil {
 		//return fmt.Errorf("error Getting resource '%v'", err)
 		resp.Diagnostics.AddError(
@@ -83,9 +88,18 @@ func (e *http2b64Resource) Create(ctx context.Context, req resource.CreateReques
 		)
 		return
 	}
-
-	data.Id = types.StringValue(url)
-	data.Url = types.StringValue(url)
+	parsedUrl, err := url.Parse(input_url)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error Creating Resource",
+			fmt.Sprintf("... details ... %v", err),
+		)
+		return
+	}
+	emptyParams := url.Values{}
+	parsedUrl.RawQuery = emptyParams.Encode()
+	data.Id = types.StringValue(parsedUrl.String())
+	data.Url = types.StringValue(input_url)
 	data.StatusCode = types.StringValue(strconv.Itoa(statusCode))
 	data.ResponseBodyBas64 = types.StringValue(responseBody)
 
@@ -106,20 +120,29 @@ func (e *http2b64Resource) Read(ctx context.Context, req resource.ReadRequest, r
 	}
 
 	// Create resource using 3rd party API.
-	url := data.Url.ValueString()
+	input_url := data.Url.ValueString()
 
-	responseBody, statusCode, err := client.GetFile(url)
+	responseBody, statusCode, err := client.GetFile(input_url)
 	if err != nil {
 		//return fmt.Errorf("error Getting resource '%v'", err)
 		resp.Diagnostics.AddError(
 			"API Error Creating Resource",
-			fmt.Sprintf("... details ... %s", err),
+			fmt.Sprintf("... details ... %v", err),
 		)
 		return
 	}
-
-	data.Id = types.StringValue(url)
-	data.Url = types.StringValue(url)
+	parsedUrl, err := url.Parse(input_url)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error Creating Resource",
+			fmt.Sprintf("... details ... %v", err),
+		)
+		return
+	}
+	emptyParams := url.Values{}
+	parsedUrl.RawQuery = emptyParams.Encode()
+	data.Id = types.StringValue(parsedUrl.String())
+	data.Url = types.StringValue(input_url)
 	data.StatusCode = types.StringValue(strconv.Itoa(statusCode))
 	data.ResponseBodyBas64 = types.StringValue(responseBody)
 
@@ -138,20 +161,29 @@ func (e *http2b64Resource) Update(ctx context.Context, req resource.UpdateReques
 	}
 
 	// Create resource using 3rd party API.
-	url := data.Url.ValueString()
+	inputUrl := data.Url.ValueString()
 
-	responseBody, statusCode, err := client.GetFile(url)
+	responseBody, statusCode, err := client.GetFile(inputUrl)
 	if err != nil {
 		//return fmt.Errorf("error Getting resource '%v'", err)
 		resp.Diagnostics.AddError(
 			"API Error Creating Resource",
-			fmt.Sprintf("... details ... %s", err),
+			fmt.Sprintf("... details ... %v", err),
 		)
 		return
 	}
-
-	data.Id = types.StringValue(url)
-	data.Url = types.StringValue(url)
+	parsedUrl, err := url.Parse(inputUrl)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error Creating Resource",
+			fmt.Sprintf("... details ... %v", err),
+		)
+		return
+	}
+	emptyParams := url.Values{}
+	parsedUrl.RawQuery = emptyParams.Encode()
+	data.Id = types.StringValue(parsedUrl.String())
+	data.Url = types.StringValue(inputUrl)
 	data.StatusCode = types.StringValue(strconv.Itoa(statusCode))
 	data.ResponseBodyBas64 = types.StringValue(responseBody)
 
