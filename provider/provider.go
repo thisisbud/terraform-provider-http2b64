@@ -1,4 +1,4 @@
-package provider
+package httpprovider
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	_ "github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-var _ provider.Provider = (*http2b64Provider)(nil)
+var Provider = (*http2b64Provider)(nil)
 
 //var _ provider.ProviderWithMetadata = (*http2b64Provider)(nil)
 
