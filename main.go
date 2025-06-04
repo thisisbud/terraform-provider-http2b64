@@ -4,7 +4,7 @@ import (
 	"context"
 	"flag"
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
-	"github.com/thisisbud/terraform-provider-http2b64/provider"
+	provider "github.com/thisisbud/terraform-provider-http2b64/provider"
 	"log"
 )
 
