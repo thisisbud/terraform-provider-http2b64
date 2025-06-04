@@ -1,8 +1,10 @@
-package provider
+package httpprovider
 
 import (
 	"context"
 	"fmt"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/thisisbud/terraform-provider-http2b64/client"
 	"net/url"
 	"strconv"
@@ -43,7 +45,11 @@ func (e *http2b64Resource) Schema(ctx context.Context, req resource.SchemaReques
 				Computed: true,
 			},
 			"response_body_base64": schema.StringAttribute{
-				Computed: true,
+				Computed:  true,
+				Sensitive: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
 			},
 		},
 	}
